@@ -1,0 +1,35 @@
+{
+	"featureSets" : [
+		{
+			"features" : [
+				{
+					"file" : "data/feature1.html",
+					"type" : "feature1"
+				},
+				{
+					"file" : "feature2.html",
+					"type" : "feature2"
+				}
+			],
+			"orientation" : "X"
+		},
+		{
+			"features" : [
+				{
+					"file" : "feature3.xml",
+					"type" : "feature3"
+				}
+			],
+			"orientation" : "Z"
+		},
+		{
+			"features" : [
+				{
+					"file" : "feature4.xml",
+					"type" : "feature4"
+				}
+			],
+			"orientation" : "Y"
+		}
+	]
+}

@@ -39,12 +39,12 @@
 	width : 100%;
 }
 	#orion-content,
-	#orion-content #grid {
+	#orion-content #orion-grid {
 		-webkit-transition-property : left top;
 		-webkit-transition-duration : .5s;
 		-webkit-transition-timing-function: ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
 	}
-	#orion-content #grid {
+	#orion-content #orion-grid {
 		position : absolute;
 		width : 99999999px;
 		-webkit-transition-duration : 1s;

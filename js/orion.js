@@ -15,6 +15,7 @@
 Orion = {};
 
 
+
 /**
  * Orion Object
  * @class
@@ -42,8 +43,6 @@ Orion.interaction = (function(){
 		$(document).bind('keydown', register);
 		$(window).bind('Orion.move', move);
 		$(window).bind('Orion.rotate', rotate);
-
-		Orion.structure.build();
 	},
 
 	/**
@@ -122,7 +121,7 @@ Orion.interaction = (function(){
 	/**
 	 * @description Rotates orion orientation
 	 * @memberOf    Orion.interaction
-	 * @method      register
+	 * @method      rotate
 	 * @private
 	 * @params      {Object} event  Event with stored orientation
 	 */
@@ -130,10 +129,6 @@ Orion.interaction = (function(){
 		$("#orion").attr('class', e.to);
 		orientation = e.to;
 	};
-
-	social = function(e){
-
-	}
 
 	$(function(){
 		init();
@@ -150,15 +145,31 @@ Orion.interaction = (function(){
  */
 Orion.structure = (function(){
 
-	var
+	var	
 
 	/**
-	* Storage object for featureSet
+	* Storage object for feature schema
 	* @memberOf			Orion.structure
 	* @private
-	* @type			{Object}
+	* @type			{Object} jQuery Object
 	*/
-	featureSet = {},
+	feature = $('<section>'),
+
+	/**
+	* Storage object for featureSet schema
+	* @memberOf			Orion.structure
+	* @private
+	* @type			{Object} jQuery Object
+	*/
+	featureSet = $('<div class="featureSet">'),
+
+	/**
+	* Storage object for grid component
+	* @memberOf			Orion.structure
+	* @private
+	* @type			{Object} jQuery Object
+	*/
+	$grid,
 
 	/**
 	* Storage object for orion
@@ -168,39 +179,60 @@ Orion.structure = (function(){
 	*/
 	$orion,
 
+	loadStructure = function(){
+		$.ajax({
+			url : 'data/structure.json',
+			success : buildFramework,
+			type : 'GET',
+			dataType : 'json'
+		});
+	},
+
 	/**
 	 * @description Build and maps orion components and features
 	 * @memberOf    Orion.structure
-	 * @method      register
+	 * @method      buildFramework
 	 * @private
 	 */
-	build = function(){
+	buildFramework = function(data){
 
-		featureSet = $('.featureSet').map(function(i, val){
-			var $el = $(this);
-			return {
-				feature : $el.children('section').map(function(){
-					return $(this);
-				}),
-				orientation : {
-					X : $el.hasClass('orientationX'),
-					Y : $el.hasClass('orientationY'),
-					Z : $el.hasClass('orientationZ'),
-					negative  : $el.hasClass('negative')
-				}
-			}
-		});
-
+		$grid = $('#orion-grid');
 		$orion = $('#orion');
 
+		Orion.data = {
+			active : data.featureSets[0].features[0],
+			featureSets : data.featureSets
+		};
+		
+		$.each(Orion.data.featureSets, function(i,fs){
+			var fs_schema = featureSet.clone().addClass('orientation' + fs.orientation);
+
+			$.each(fs.features,function(j,f){
+				var f_schema = feature.clone().addClass(f.type);
+				f.$el = f_schema;
+
+				fs_schema.append(f_schema);
+			})
+			$grid.append(fs_schema);
+		});
+
 		setLayout();
-		setFeatureMapping();
+		loadFeature(Orion.data.featureSets[0]);
+	},
+
+	loadFeature = function(fs){
+		var featureSet = fs;
+// HERE working on loading multiple features
+		$(feature.$el).load(feature.file , function(){
+			console.log('yay');
+		});
+		console.log(feature);
 	},
 
 	/**
 	 * @description Creates style block setting feature>section layout
 	 * @memberOf    Orion.structure
-	 * @method      register
+	 * @method      setLayout
 	 * @private
 	 */
 	setLayout = function(){
@@ -221,7 +253,7 @@ Orion.structure = (function(){
 	 *              Also stores element positioning for usage in
 	 *              Orion.interaction.move()
 	 * @memberOf    Orion.structure
-	 * @method      register
+	 * @method      setFeatureMapping
 	 * @private
 	 */
 	setFeatureMapping = function(){
@@ -242,8 +274,6 @@ Orion.structure = (function(){
 
 				f.home = fs.feature[0];
 				f.pos = f.position();
-				f.onChange = f.attr('onChange');
-				f.onComplete = f.attr('onComplete');
 
 				/** first element **/
 				if(i == 0 && j == 0){
@@ -290,9 +320,11 @@ Orion.structure = (function(){
 		})
 	};
 
-	return {
-		build : build
-	}
+	$(function(){
+		loadStructure();
+	});
+
+	return {}
 })();
 
 
