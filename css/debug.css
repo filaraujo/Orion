@@ -1,0 +1,100 @@
+.debug h1 {
+	background : #444;
+	color : #fff;	
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 18px;
+	font-weight : bold;
+	padding : 5px;
+	text-transform : uppercase;
+}
+.debug  h2 {
+	background : #555;
+	border-top : 1px solid #444;
+	border-bottom : 2px solid #333;
+	color : #fff;	
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 13px;
+	font-weight : bold;
+	padding : 5px;
+	text-transform : uppercase;
+}
+.debug  #definitions {
+	background : #666;
+	color : #fff;
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	overflow : auto;
+	text-transform : uppercase;
+}
+	#definitions li {
+		font-size : 12px;
+		padding : 5px 10px;
+		border-bottom : 1px solid #555;
+		overflow : auto;
+	}
+	#definitions li.sub{
+		font-size : 10px;
+		padding : 5px 20px;
+		border-bottom : 1px solid #555;
+		overflow : auto;
+	}
+		#definitions span {
+			clear : left;
+			float : left;
+			margin-right : 8px;
+			width : 10%;
+		}
+		#definitions p {
+			float : left;
+			text-transform : lowercase;
+			width : 85%;
+		}
+
+
+.debug  .links {
+	background : #666;
+	color : #fff;
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 11px;
+	overflow : auto;
+	text-transform : uppercase;
+}
+	.links div {
+		margin : 5px 5px;
+		
+	}
+	.links a {
+		color : #ccf;
+		margin-right : 10px;
+		text-transform : none;
+	}
+	.links a:hover {
+		text-decoration : underline;
+	}
+
+.debug .datasample {	
+	background : #666;
+	padding : 7px;
+}
+	.datasample table {
+		background : #555;
+		display : inline-block;
+		font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size : 11px;
+		margin-right : 20px;
+	}
+	.datasample th {
+		background : #444;
+		color : #ccf;
+	}
+	.datasample td {
+		color : #eee;
+	}
+	.datasample th,
+	.datasample td {
+		padding : 2px 5px ;
+	}
+	.datasample table,
+	.datasample table th,
+	.datasample table td {
+		border : 1px solid #333;
+	}

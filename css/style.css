@@ -1,0 +1,181 @@
+/**
+ * @author			Filipe Araujo
+ * 
+ * @version			1.0
+ * @since			1.0
+ * 
+ * @lastChanges		
+ */
+
+/**
+ * @element			Orion Container
+ * @layout
+ */
+ #orion {
+ 	border : 2px solid #ccc;
+	height : 500px;
+	margin : 10px auto;
+	overflow : hidden;
+	position : relative;
+	width : 800px;
+ }
+	 #orion.left {
+		-webkit-transform : rotate(-90deg);
+	 }
+	 #orion.right {
+		-webkit-transform : rotate(90deg);
+	 }
+	 #orion.inverse {
+		-webkit-transform : rotate(180deg);
+	 }
+/**
+ * @element			Orion Content Container
+ * @layout
+ */
+#orion-content {
+	height : 100%;
+	overflow : hidden;
+	position : absolute;
+	width : 100%;
+}
+	#orion-content,
+	#orion-content #grid {
+		-webkit-transition-property : left top;
+		-webkit-transition-duration : .5s;
+		-webkit-transition-timing-function: ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
+	}
+	#orion-content #grid {
+		position : absolute;
+		width : 99999999px;
+		-webkit-transition-duration : 1s;
+	}
+/**
+ * @element			Orion Social Aside
+ * @layout
+ */
+#orion-social {
+	background : #eee;
+	left : -100px;
+	position : absolute;
+	width : 100px;
+}
+	#orion-social.default {
+		left : 0;
+	}
+		#orion-social.default.open+#orion-content {
+			z-index : 100;
+			left : 100px;
+		}
+	#orion-social.slide {
+		z-index : 100;
+		-webkit-transition-property : left top;
+		-webkit-transition-duration : .5s;
+		-webkit-transition-timing-function: ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
+	}
+		#orion-social.slide.open {
+			left : 0;
+		}
+
+
+/**
+* @section			 FeatureSet Orientation
+* @layout
+*/
+.orientationX {}
+	.orientationX section {
+		float : left;
+	}
+.orientationY {}	
+	.orientationY section {
+		float : left;
+		position : absolute;
+	}
+	.orientationY section:first-child {
+		position : relative;	
+	}
+.orientationZ {}
+
+
+
+
+
+
+/** 
+ * @element			featureSet
+ */
+
+.featureSet {
+	color : #fff;
+	float : left;
+	font-family : Verdana, sans-serif;
+	font-size : 11px;
+}
+	.featureSet section header,
+	.featureSet section article,
+	.featureSet section sidebar {
+		background : #666;
+	}
+	.featureSet section header {
+		display : block;
+		height : 60px;
+		margin-bottom : 10px;
+	}
+		.featureSet section article p {
+			padding : 10px;
+		}
+	.featureSet section sidebar {
+		height : 410px;
+	}
+		
+/*
+ * @element			feature 1
+ */
+section.feature1 {}	
+	section.feature1 header {}
+	section.feature1 article {
+		float : left;
+		height : 410px;
+		width : 670px;
+	}
+	section.feature1 sidebar {
+		float : right;
+		width : 100px;
+	}
+
+/*
+ * @element			feature 2
+ */
+section.feature2 {}	
+	section.feature2 header {}
+	section.feature2 article {
+		height : 410px;
+		width : 100%;
+		-webkit-column-count : 3;  
+		-webkit-column-rule : 2px solid #bbb;
+		-webkit-column-gap : 10px;
+	}
+
+/*
+ * @element			feature 3
+ */
+section.feature3 {}
+	section.feature3 article {
+		height : 410px;
+		float : right;
+		width : 670px;
+	}
+	section.feature3 sidebar {
+		float : left;
+		width : 100px;
+	}
+
+/**
+ * @element			feature 4
+ */
+section.feature4 {}
+	section.feature4 article {
+		height : 480px;
+		width : 780px;
+	}
+
+
