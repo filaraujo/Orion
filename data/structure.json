@@ -1,31 +1,35 @@
 {
-	"featureSets" : [
+	"featureSet" : [
 		{
-			"features" : [
+			"feature" : [
 				{
-					"file" : "data/feature1.html",
+					"file" : "data/fs1f1.html",
 					"type" : "feature1"
 				},
 				{
-					"file" : "feature2.html",
-					"type" : "feature2"
+					"file" : "data/fs1f2.html",
+					"type" : "feature1"
 				}
 			],
 			"orientation" : "X"
 		},
 		{
-			"features" : [
+			"feature" : [
 				{
-					"file" : "feature3.xml",
-					"type" : "feature3"
+					"file" : "data/feature3.xml",
+					"type" : "feature2"
 				}
 			],
 			"orientation" : "Z"
 		},
 		{
-			"features" : [
+			"feature" : [
 				{
-					"file" : "feature4.xml",
+					"file" : "data/feature4.xml",
+					"type" : "feature3"
+				},
+				{
+					"file" : "data/feature4.xml",
 					"type" : "feature4"
 				}
 			],

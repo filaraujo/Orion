@@ -2,10 +2,10 @@
 * @file                 Orion.js
 * @author               Filipe Araujo
 *
-* @TODO                 Ajax loading
+* @TODO                 content loading
+* @TODO                 grid movement
 * @TODO                 onEnter, onExit, onChange, onComplete
 */
-
 
 /**
  * Orion Object
@@ -145,7 +145,7 @@ Orion.interaction = (function(){
  */
 Orion.structure = (function(){
 
-	var	
+	var
 
 	/**
 	* Storage object for feature schema
@@ -153,7 +153,7 @@ Orion.structure = (function(){
 	* @private
 	* @type			{Object} jQuery Object
 	*/
-	feature = $('<section>'),
+	$feature = $('<section>'),
 
 	/**
 	* Storage object for featureSet schema
@@ -161,7 +161,7 @@ Orion.structure = (function(){
 	* @private
 	* @type			{Object} jQuery Object
 	*/
-	featureSet = $('<div class="featureSet">'),
+	$featureSet = $('<div class="featureSet">'),
 
 	/**
 	* Storage object for grid component
@@ -189,62 +189,53 @@ Orion.structure = (function(){
 	},
 
 	/**
-	 * @description Build and maps orion components and features
+	 * @description Build html structure for featuresets and features
 	 * @memberOf    Orion.structure
 	 * @method      buildFramework
 	 * @private
 	 */
 	buildFramework = function(data){
 
+		var $f,
+			$fs;
+
 		$grid = $('#orion-grid');
 		$orion = $('#orion');
 
-		Orion.data = {
-			active : data.featureSets[0].features[0],
-			featureSets : data.featureSets
-		};
-		
-		$.each(Orion.data.featureSets, function(i,fs){
-			var fs_schema = featureSet.clone().addClass('orientation' + fs.orientation);
+		Orion.featureSet = data.featureSet;
 
-			$.each(fs.features,function(j,f){
-				var f_schema = feature.clone().addClass(f.type);
-				f.$el = f_schema;
+		$.each(Orion.featureSet, function(i,fs){
+			$fs = $featureSet.clone().addClass('orientation' + fs.orientation);
 
-				fs_schema.append(f_schema);
-			})
-			$grid.append(fs_schema);
+			$.each(fs.feature,function(j,f){
+				$f = $feature.clone().addClass(f.type);
+				Orion.featureSet[i].feature[j] = $f;
+				$fs.append($f);
+			});
+			$grid.append($fs);
 		});
 
 		setLayout();
-		loadFeature(Orion.data.featureSets[0]);
-	},
-
-	loadFeature = function(fs){
-		var featureSet = fs;
-// HERE working on loading multiple features
-		$(feature.$el).load(feature.file , function(){
-			console.log('yay');
-		});
-		console.log(feature);
+		mapFeatures();
 	},
 
 	/**
-	 * @description Creates style block setting feature>section layout
+	 * @description Systematically load features
 	 * @memberOf    Orion.structure
-	 * @method      setLayout
+	 * @method      loadFeature
 	 * @private
 	 */
-	setLayout = function(){
-		var height = $orion.height(),
-			width = $orion.width();
+	loadFeature = function(fs){
+		$.each(fs.feature, function(i,f){
+			if(f.loaded){
+				return false;
+			};
+			f.$el.load(f.file, function(){
+				f.loaded = true;
+			});
+			fs.loaded = true;
+		});
 
-		$('head').append(
-			'<style>'+
-				'#orion .featureSet { height : '+height+'px; }\n'+
-				'#orion .featureSet>section, #orion-content { height : '+height+'px; width : '+width+'px; }\n'+
-				'#orion #orion-social { height : '+height+'px; }\n'+
-			'</style>');
 	},
 
 	/**
@@ -253,52 +244,46 @@ Orion.structure = (function(){
 	 *              Also stores element positioning for usage in
 	 *              Orion.interaction.move()
 	 * @memberOf    Orion.structure
-	 * @method      setFeatureMapping
+	 * @method      mapFeatures
 	 * @private
 	 */
-	setFeatureMapping = function(){
+	mapFeatures = function(){
+		$.each(Orion.featureSet, function(i,fs){
+			$.each(fs.feature,function(j,f){
+				var next = (fs.feature[j+1]) ? fs.feature[j+1].get(0) : undefined,
+					nextSet = (Orion.featureSet[i+1]) ? Orion.featureSet[i+1].feature[0].get(0) : undefined,
+					prev = (fs.feature[j-1]) ? fs.feature[j-1].get(0) : undefined,
+					prevSet = (Orion.featureSet[i-1]) ? Orion.featureSet[i-1].feature[0].get(0) : undefined,
+					reverse;
 
-		Orion.grid = {
-			$el : $('#grid'),
-			featureSet : featureSet,
-			active : featureSet[0].feature[0]
-		};
-
-		featureSet.each(function(i,fs){
-			fs.feature.each(function(j,f){
-				var next = fs.feature[j+1],
-					prev = fs.feature[j-1],
-					nextSet = featureSet[i+1],
-					prevSet = featureSet[i-1],
-					reverse = fs.orientation.negative;
-
-				f.home = fs.feature[0];
+				
+				f.home = fs.feature[0].get(0);
 				f.pos = f.position();
 
 				/** first element **/
 				if(i == 0 && j == 0){
-					f.east = next || nextSet.feature[0];
+					f.east = next || nextSet;
 					return;
 				}
 				/** last element **/
-				if((i == featureSet.length-1 && j == fs.feature.length-1) && !fs.orientation.Y){
-					f.west = prev || prevSet.feature[0];
+				if((i == Orion.featureSet.length-1 && j == fs.feature.length-1) && (fs.orientation != "Y")){
+					f.west = prev || prevSet;
 					return;
 				}
 				/** Any X or Z element **/
-				if(fs.orientation.X || fs.orientation.Z){
-					f.east = next || nextSet.feature[0];
-					f.west = prev || prevSet.feature[(prevSet.orientation.Y) ? 0 : prevSet.feature.length-1];
+				if(fs.orientation != "Y"){
+					f.east = next || nextSet;
+					f.west = prev || Orion.featureSet[i-1].feature[(Orion.featureSet[i-1].orientation == "Y") ? 0 : Orion.featureSet[i-1].feature.length-1];
 				}
 				/** Any Y element **/
-				if(fs.orientation.Y){
+				if(fs.orientation == "Y"){
 					/** first Y element **/
-					if(f.is(':first-child')){
+					if(j == 0){
 						if(nextSet){
-							f.east = nextSet.feature[0];
+							f.east = nextSet;
 						}
 						if(prevSet){
-							f.west = prevSet.feature[0];
+							f.west = prevSet;
 						}
 					}
 					else{
@@ -317,7 +302,26 @@ Orion.structure = (function(){
 					}
 				}
 			});
-		})
+
+		});
+	},
+
+	/**
+	 * @description Creates style block setting feature>section layout
+	 * @memberOf    Orion.structure
+	 * @method      setLayout
+	 * @private
+	 */
+	setLayout = function(){
+		var height = $orion.height(),
+			width = $orion.width();
+
+		$('head').append(
+			'<style>'+
+				'#orion .featureSet { height : '+height+'px; }\n'+
+				'#orion .featureSet>section, #orion-content { height : '+height+'px; width : '+width+'px; }\n'+
+				'#orion #orion-social { height : '+height+'px; }\n'+
+			'</style>');
 	};
 
 	$(function(){
