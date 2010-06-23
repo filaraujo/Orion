@@ -2,8 +2,7 @@
 * @file                 Orion.js
 * @author               Filipe Araujo
 *
-* @TODO                 content loading
-* @TODO                 grid movement
+* @TODO                 content priority loading
 * @TODO                 onEnter, onExit, onChange, onComplete
 */
 
@@ -13,7 +12,6 @@
  * @namespace       Orion
  */
 Orion = {};
-
 
 
 /**
@@ -53,28 +51,29 @@ Orion.interaction = (function(){
 	 * @params      {Object} event  Event with stored direction
 	 */
 	move = function(e){
-		var active = Orion.grid.active[e.to],
+		var active = Orion.featureSet.active[e.to],
 			pos;
-
+		
 		if(!active){
+			console.log(e.to);
 			return false;
 		}
-		pos = active.pos;
+		pos = $(active).position();
 
-		onChange();
+		//onChange();
 
-		Orion.grid.$el.css({
+		$('#orion-grid').css({
 			'left' : -pos.left,
 			'top' : -pos.top
 		});
 
-		onComplete();
+		//onComplete();
 
-		Orion.grid.active = active;
+		Orion.featureSet.active = active;
 	},
 
 	onChange = function(){
-		eval(Orion.grid.active.onChange);
+		//eval(Orion.grid.active.onChange);
 		console.log('triggering onChange');
 		$(window).trigger('Orion.timeline.onChange');
 	},
@@ -134,7 +133,7 @@ Orion.interaction = (function(){
 		init();
 	});
 
-	return {}
+	return {};
 })();
 
 
@@ -149,7 +148,7 @@ Orion.structure = (function(){
 
 	/**
 	* Storage object for feature schema
-	* @memberOf			Orion.structure
+	* @memberOf		Orion.structure
 	* @private
 	* @type			{Object} jQuery Object
 	*/
@@ -157,7 +156,7 @@ Orion.structure = (function(){
 
 	/**
 	* Storage object for featureSet schema
-	* @memberOf			Orion.structure
+	* @memberOf		Orion.structure
 	* @private
 	* @type			{Object} jQuery Object
 	*/
@@ -165,7 +164,7 @@ Orion.structure = (function(){
 
 	/**
 	* Storage object for grid component
-	* @memberOf			Orion.structure
+	* @memberOf		Orion.structure
 	* @private
 	* @type			{Object} jQuery Object
 	*/
@@ -179,6 +178,13 @@ Orion.structure = (function(){
 	*/
 	$orion,
 
+	/**
+	 * @description loads structure.json containaing featureSet and feature
+	 *              structure
+	 * @memberOf    Orion.structure
+	 * @method      loadStructure
+	 * @private
+	 */
 	loadStructure = function(){
 		$.ajax({
 			url : 'data/structure.json',
@@ -189,10 +195,11 @@ Orion.structure = (function(){
 	},
 
 	/**
-	 * @description Build html structure for featuresets and features
+	 * @description Build html structure for featureSets and features
 	 * @memberOf    Orion.structure
 	 * @method      buildFramework
 	 * @private
+	 * @param       {Object} json object from xhr request 
 	 */
 	buildFramework = function(data){
 
@@ -201,7 +208,7 @@ Orion.structure = (function(){
 
 		$grid = $('#orion-grid');
 		$orion = $('#orion');
-
+		
 		Orion.featureSet = data.featureSet;
 
 		$.each(Orion.featureSet, function(i,fs){
@@ -209,6 +216,8 @@ Orion.structure = (function(){
 
 			$.each(fs.feature,function(j,f){
 				$f = $feature.clone().addClass(f.type);
+				$f.file = f.file;
+				$f.type = f.type;
 				Orion.featureSet[i].feature[j] = $f;
 				$fs.append($f);
 			});
@@ -217,25 +226,32 @@ Orion.structure = (function(){
 
 		setLayout();
 		mapFeatures();
+		loadFeatures();
 	},
 
 	/**
 	 * @description Systematically load features
 	 * @memberOf    Orion.structure
-	 * @method      loadFeature
+	 * @method      loadFeatures
 	 * @private
 	 */
-	loadFeature = function(fs){
-		$.each(fs.feature, function(i,f){
-			if(f.loaded){
+	loadFeatures = function(){
+		var fs = Orion.featureSet;
+
+		$.each(fs, function(i,fs){
+			if(fs.loaded){
 				return false;
-			};
-			f.$el.load(f.file, function(){
-				f.loaded = true;
+			}
+			$.each(fs.feature, function(j,f){
+				if(f.loaded){
+					return false;
+				}
+				f.load(f.file, function(){
+					f.loaded = true;
+				});
 			});
 			fs.loaded = true;
 		});
-
 	},
 
 	/**
@@ -250,19 +266,19 @@ Orion.structure = (function(){
 	mapFeatures = function(){
 		$.each(Orion.featureSet, function(i,fs){
 			$.each(fs.feature,function(j,f){
-				var next = (fs.feature[j+1]) ? fs.feature[j+1].get(0) : undefined,
-					nextSet = (Orion.featureSet[i+1]) ? Orion.featureSet[i+1].feature[0].get(0) : undefined,
-					prev = (fs.feature[j-1]) ? fs.feature[j-1].get(0) : undefined,
-					prevSet = (Orion.featureSet[i-1]) ? Orion.featureSet[i-1].feature[0].get(0) : undefined,
+				var next = (fs.feature[j+1]) ? fs.feature[j+1] : undefined,
+					nextSet = (Orion.featureSet[i+1]) ? Orion.featureSet[i+1].feature[0] : undefined,
+					prev = (fs.feature[j-1]) ? fs.feature[j-1] : undefined,
+					prevSet = (Orion.featureSet[i-1]) ? Orion.featureSet[i-1].feature[0] : undefined,
 					reverse;
 
 				
-				f.home = fs.feature[0].get(0);
-				f.pos = f.position();
+				f.home = fs.feature[0];
 
 				/** first element **/
-				if(i == 0 && j == 0){
+				if(i === 0 && j === 0){
 					f.east = next || nextSet;
+					Orion.featureSet.active = f;
 					return;
 				}
 				/** last element **/
@@ -278,7 +294,7 @@ Orion.structure = (function(){
 				/** Any Y element **/
 				if(fs.orientation == "Y"){
 					/** first Y element **/
-					if(j == 0){
+					if(j === 0){
 						if(nextSet){
 							f.east = nextSet;
 						}
@@ -290,7 +306,6 @@ Orion.structure = (function(){
 						f.css({
 							top : ((reverse) ? 1 : -1 ) * ($orion.height() * j)
 						});
-						f.pos = f.position();
 					}
 					/** Any Y element with next sibling **/
 					if(next){
@@ -302,7 +317,6 @@ Orion.structure = (function(){
 					}
 				}
 			});
-
 		});
 	},
 
@@ -328,36 +342,73 @@ Orion.structure = (function(){
 		loadStructure();
 	});
 
-	return {}
+	return {};
 })();
 
 
-
-
-
-
-
+/**
+ * Orion Object
+ * @class
+ * @namespace       Orion.social
+ */
 Orion.social = (function(){
 
 	var
 
+	/**
+	* Storage object for social aside
+	* @memberOf			Orion.social
+	* @private
+	* @type			{Object} jQuery Object
+	*/
 	$social,
+
+	/**
+	* className of fx applied to social aside
+	* @memberOf	    Orion.social
+	* @private
+	* @type			{String} effect name : default, slide
+	*/
 	fx = 'default',
 
+	/**
+	 * @description Initialization function
+	 * @memberOf    Orion.social
+	 * @method      init
+	 * @private
+	 */
 	init = function(){
 		$(window).bind('Orion.social.open', open);
 		$(window).bind('Orion.social.close', close);
 		$social = $('#orion-social').attr('class',fx);
 	},
 
+	/**
+	 * @description close social aside by removing class name
+	 * @memberOf    Orion.social
+	 * @method      close
+	 * @private
+	 */
 	close = function(){
 		$social.removeClass('open');
 	},
 
+	/**
+	 * @description opens social aside by adding class name
+	 * @memberOf    Orion.social
+	 * @method      open
+	 * @private
+	 */
 	open = function(){
 		$social.addClass(' open');
 	},
 
+	/**
+	 * @description sets social aside effect
+	 * @memberOf    Orion.social
+	 * @method      setFX
+	 * @private
+	 */
 	setFX = function(str){
 		fx = str || 'default';
 		return this;
@@ -366,7 +417,7 @@ Orion.social = (function(){
 	return {
 		init : init,
 		setFX : setFX
-	}
+	};
 })();
 
 

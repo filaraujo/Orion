@@ -5,10 +5,11 @@
 				{
 					"file" : "data/fs1f1.html",
 					"type" : "feature1"
+
 				},
 				{
 					"file" : "data/fs1f2.html",
-					"type" : "feature1"
+					"type" : "feature2"
 				}
 			],
 			"orientation" : "X"
@@ -16,8 +17,8 @@
 		{
 			"feature" : [
 				{
-					"file" : "data/feature3.xml",
-					"type" : "feature2"
+					"file" : "data/fs2f1.html",
+					"type" : "feature3"
 				}
 			],
 			"orientation" : "Z"
@@ -25,12 +26,12 @@
 		{
 			"feature" : [
 				{
-					"file" : "data/feature4.xml",
-					"type" : "feature3"
+					"file" : "data/fs3f1.html",
+					"type" : "feature4"
 				},
 				{
-					"file" : "data/feature4.xml",
-					"type" : "feature4"
+					"file" : "data/fs3f2.html",
+					"type" : "feature5"
 				}
 			],
 			"orientation" : "Y"
