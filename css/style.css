@@ -13,11 +13,11 @@
  */
  #orion {
  	border : 2px solid #ccc;
-	height : 500px;
+	height : 800px;
 	margin : 10px auto;
 	overflow : hidden;
 	position : relative;
-	width : 800px;
+	width : 600px;
  }
 	 #orion.left {
 		-webkit-transform : rotate(-90deg);
@@ -94,101 +94,11 @@
 		position : relative;	
 	}
 .orientationZ {}
-
-
-
-
-
-
-/** 
- * @element			featureSet
- */
-
-.featureSet {
-	color : #fff;
-	float : left;
-	font-family : Verdana, sans-serif;
-	font-size : 11px;
-}
-	.featureSet section header,
-	.featureSet section article,
-	.featureSet section sidebar {
-		background : #666;
-	}
-	.featureSet section header {
-		display : block;
-		height : 60px;
-		margin-bottom : 10px;
-	}
-		.featureSet section article p {
-			padding : 10px;
-		}
-	.featureSet section sidebar {
-		height : 410px;
-	}
-		
-/*
- * @element			feature 1
- */
-section.feature1 {}	
-	section.feature1 header {}
-	section.feature1 article {
+	.orientationZ section {
 		float : left;
-		height : 410px;
-		width : 670px;
-	}
-	section.feature1 sidebar {
-		float : right;
-		width : 100px;
 	}
 
-/*
- * @element			feature 2
- */
-section.feature2 {}	
-	section.feature2 header {}
-	section.feature2 article {
-		float : right;
-		height : 410px;
-		width : 670px;
-	}
-	section.feature2 sidebar {
-		float : left;
-		width : 100px;
-	}
 
-/*
- * @element			feature 3
- */
-section.feature3 {}
-	section.feature3 article {
-		height : 410px;
-		width : 100%;
-		-webkit-column-count : 3;
-		-webkit-column-rule : 2px solid #bbb;
-		-webkit-column-gap : 10px;
-	}
 
-/**
- * @element			feature 4
- */
-section.feature4 {}
-	section.feature4 article {
-		height : 480px;
-		width : 780px;
-	}
 
-/**
- * @element			feature 5
- */
-section.feature5 {}
-	section.feature5 article {
-		float : right;
-		height : 480px;
-		width : 670px;
-	}
-	section.feature5 sidebar {
-		float : left;
-		height : 480px;
-		width : 100px;
-	}
+

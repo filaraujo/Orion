@@ -60,6 +60,7 @@ Orion.interaction = (function(){
 		}
 		pos = $(active).position();
 
+		console.log(pos);
 		//onChange();
 
 		$('#orion-grid').css({
@@ -202,7 +203,6 @@ Orion.structure = (function(){
 	 * @param       {Object} json object from xhr request 
 	 */
 	buildFramework = function(data){
-
 		var $f,
 			$fs;
 
@@ -408,6 +408,7 @@ Orion.social = (function(){
 	 * @memberOf    Orion.social
 	 * @method      setFX
 	 * @private
+	 * @usage       Orion.social.setFX('slide').init();
 	 */
 	setFX = function(str){
 		fx = str || 'default';

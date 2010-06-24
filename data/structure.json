@@ -1,5 +1,16 @@
 {
+
 	"featureSet" : [
+		{
+			"feature" : [
+				{
+					"file" : "data/cover.html",
+					"type" : "cover"
+
+				}
+			],
+			"orientation" : "X"
+		},
 		{
 			"feature" : [
 				{
