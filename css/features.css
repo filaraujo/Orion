@@ -8,12 +8,12 @@
  */
 @font-face {
   font-family: 'Franklin';
-  src: url(../fonts/FRADMCN.ttf);
+  src: url(../font/FRADMCN.ttf);
 }
 
 @font-face {
   font-family: 'Corbel';
-  src: url(../fonts/corbelb.ttf);
+  src: url(../font/corbelb.ttf);
 }
 
 
