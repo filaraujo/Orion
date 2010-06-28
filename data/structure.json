@@ -1,10 +1,10 @@
 {
 
-	"featureSet" : [
+	"articles" : [
 		{
-			"feature" : [
+			"pages" : [
 				{
-					"file" : "data/cover.html",
+					"src" : "data/cover.html",
 					"type" : "cover"
 
 				}
@@ -12,36 +12,40 @@
 			"orientation" : "X"
 		},
 		{
-			"feature" : [
+			"pages" : [
 				{
-					"file" : "data/fs1f1.html",
+					"src" : "data/a1p1.html",
 					"type" : "feature1"
 
 				},
 				{
-					"file" : "data/fs1f2.html",
+					"src" : "data/a1p2.html",
 					"type" : "feature2"
 				}
 			],
 			"orientation" : "X"
 		},
 		{
-			"feature" : [
+			"pages" : [
 				{
-					"file" : "data/fs2f1.html",
-					"type" : "feature3"
+					"src" : "data/a2p1.html",
+					"type" : "feature1"
+				},
+				{
+					"src" : "data/a2p1.html",
+					"type" : "feature1"
 				}
 			],
 			"orientation" : "Z"
 		},
 		{
-			"feature" : [
+			"pages" : [
 				{
-					"file" : "data/fs3f1.html",
+					"src" : "data/a3p1.html",
 					"type" : "feature4"
 				},
 				{
-					"file" : "data/fs3f2.html",
+					"src" : "data/a3p2.html",
 					"type" : "feature5"
 				}
 			],

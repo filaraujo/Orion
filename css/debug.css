@@ -18,6 +18,11 @@
 	padding : 5px;
 	text-transform : uppercase;
 }
+	.debug  h2 span {
+		color : #440A0A;
+		font-size : 10px;
+		text-transform : lowercase;
+	}
 .debug  #definitions {
 	background : #666;
 	color : #fff;

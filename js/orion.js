@@ -11,47 +11,41 @@
  * @class
  * @namespace       Orion
  */
-Orion = {};
+Orion = {
+
+
+};
 
 
 /**
  * Orion Object
  * @class
- * @namespace       Orion.interaction
+ * @namespace       Orion.navigation
  */
-Orion.interaction = (function(){
+Orion.navigation = (function(){
 
 	var
 
 	/**
-	* Storage object for device orientation
-	* @memberOf		Orion.interaction
-	* @private
-	* @type			{String}
-	*/
-	orientation = 'default',
-
-	/**
 	 * @description Initialization function
-	 * @memberOf    Orion.interaction
+	 * @memberOf    Orion.navigation
 	 * @method      init
 	 * @private
 	 */
 	init = function(){
 		$(document).bind('keydown', register);
 		$(window).bind('Orion.move', move);
-		$(window).bind('Orion.rotate', rotate);
 	},
 
 	/**
 	 * @description Move grid based on data stored on the element
-	 * @memberOf    Orion.interaction
+	 * @memberOf    Orion.navigation
 	 * @method      move
 	 * @private
 	 * @params      {Object} event  Event with stored direction
 	 */
 	move = function(e){
-		var active = Orion.featureSet.active[e.to],
+		var active = Orion.articles.active[e.to],
 			pos;
 		
 		if(!active){
@@ -60,7 +54,6 @@ Orion.interaction = (function(){
 		}
 		pos = $(active).position();
 
-		console.log(pos);
 		//onChange();
 
 		$('#orion-grid').css({
@@ -70,7 +63,7 @@ Orion.interaction = (function(){
 
 		//onComplete();
 
-		Orion.featureSet.active = active;
+		Orion.articles.active = active;
 	},
 
 	onChange = function(){
@@ -90,8 +83,8 @@ Orion.interaction = (function(){
 
 	/**
 	 * @description Register keypress and executes move() base on Code
-	 * @memberOf    Orion.interaction
-	 * @method      register
+	 * @memberOf    Orion.move
+	 * @method      navigation
 	 * @private
 	 * @params      {Object} event  Event with keypress to register
 	 */
@@ -118,23 +111,22 @@ Orion.interaction = (function(){
 		}
 	},
 
-	/**
-	 * @description Rotates orion orientation
-	 * @memberOf    Orion.interaction
-	 * @method      rotate
-	 * @private
-	 * @params      {Object} event  Event with stored orientation
-	 */
-	rotate = function(e){
-		$("#orion").attr('class', e.to);
-		orientation = e.to;
-	};
+	
+	navigationApi = function(){
+		return {
+			setArticle : function(index){
+				Orion.articles.active = Orion.articles[index].pages[0];
+				$(window).trigger({type:'Orion.move', to:'home'});
+				move();
+			}
+		}
+	}
 
 	$(function(){
 		init();
 	});
 
-	return {};
+	return navigationApi();
 })();
 
 
@@ -153,7 +145,7 @@ Orion.structure = (function(){
 	* @private
 	* @type			{Object} jQuery Object
 	*/
-	$feature = $('<section>'),
+	$page = $('<section>'),
 
 	/**
 	* Storage object for featureSet schema
@@ -161,7 +153,7 @@ Orion.structure = (function(){
 	* @private
 	* @type			{Object} jQuery Object
 	*/
-	$featureSet = $('<div class="featureSet">'),
+	$article = $('<article>'),
 
 	/**
 	* Storage object for grid component
@@ -203,30 +195,27 @@ Orion.structure = (function(){
 	 * @param       {Object} json object from xhr request 
 	 */
 	buildFramework = function(data){
-		var $f,
-			$fs;
+		var $art,
+			$pg;
 
 		$grid = $('#orion-grid');
 		$orion = $('#orion');
-		
-		Orion.featureSet = data.featureSet;
-
-		$.each(Orion.featureSet, function(i,fs){
-			$fs = $featureSet.clone().addClass('orientation' + fs.orientation);
-
-			$.each(fs.feature,function(j,f){
-				$f = $feature.clone().addClass(f.type);
-				$f.file = f.file;
-				$f.type = f.type;
-				Orion.featureSet[i].feature[j] = $f;
-				$fs.append($f);
+		Orion.articles = data.articles;
+		$.each(Orion.articles, function(i,article){
+			$art = $article.clone().addClass('orientation' + article.orientation).attr("id",'a'+i);
+			$.each(article.pages,function(j,page){
+				$pg= $page.clone().addClass(page.type);
+				$pg.src = page.src;
+				$pg.type = page.type;
+				Orion.articles[i].pages[j] = $pg;
+				$art.append($pg);
 			});
-			$grid.append($fs);
+			$grid.append($art);
 		});
 
 		setLayout();
-		mapFeatures();
-		loadFeatures();
+		mapArticles();
+		loadArticles();
 	},
 
 	/**
@@ -235,22 +224,20 @@ Orion.structure = (function(){
 	 * @method      loadFeatures
 	 * @private
 	 */
-	loadFeatures = function(){
-		var fs = Orion.featureSet;
-
-		$.each(fs, function(i,fs){
-			if(fs.loaded){
+	loadArticles = function(){
+		$.each(Orion.articles, function(i,article){
+			if(article.loaded){
 				return false;
 			}
-			$.each(fs.feature, function(j,f){
-				if(f.loaded){
+			$.each(article.pages, function(j,page){
+				if(page.loaded){
 					return false;
 				}
-				f.load(f.file, function(){
-					f.loaded = true;
+				page.load(page.src, function(){
+					page.loaded = true;
 				});
 			});
-			fs.loaded = true;
+			article.loaded = true;
 		});
 	},
 
@@ -263,57 +250,56 @@ Orion.structure = (function(){
 	 * @method      mapFeatures
 	 * @private
 	 */
-	mapFeatures = function(){
-		$.each(Orion.featureSet, function(i,fs){
-			$.each(fs.feature,function(j,f){
-				var next = (fs.feature[j+1]) ? fs.feature[j+1] : undefined,
-					nextSet = (Orion.featureSet[i+1]) ? Orion.featureSet[i+1].feature[0] : undefined,
-					prev = (fs.feature[j-1]) ? fs.feature[j-1] : undefined,
-					prevSet = (Orion.featureSet[i-1]) ? Orion.featureSet[i-1].feature[0] : undefined,
+	mapArticles = function(){
+		$.each(Orion.articles, function(i,article){
+			$.each(article.pages,function(j,page){
+				var next = (article.pages[j+1]) ? article.pages[j+1] : undefined,
+					nextSet = (Orion.articles[i+1]) ? Orion.articles[i+1].pages[0] : undefined,
+					prev = (article.pages[j-1]) ? article.pages[j-1] : undefined,
+					prevSet = (Orion.articles[i-1]) ? Orion.articles[i-1].pages[0] : undefined,
 					reverse;
 
-				
-				f.home = fs.feature[0];
+				page.home = article.pages[0];
 
 				/** first element **/
 				if(i === 0 && j === 0){
-					f.east = next || nextSet;
-					Orion.featureSet.active = f;
+					page.east = next || nextSet;
+					Orion.articles.active = page;
 					return;
 				}
 				/** last element **/
-				if((i == Orion.featureSet.length-1 && j == fs.feature.length-1) && (fs.orientation != "Y")){
-					f.west = prev || prevSet;
+				if((i == Orion.articles.length-1 && j == article.pages.length-1) && (article.orientation != "Y")){
+					page.west = prev || prevSet;
 					return;
 				}
 				/** Any X or Z element **/
-				if(fs.orientation != "Y"){
-					f.east = next || nextSet;
-					f.west = prev || Orion.featureSet[i-1].feature[(Orion.featureSet[i-1].orientation == "Y") ? 0 : Orion.featureSet[i-1].feature.length-1];
+				if(article.orientation != "Y"){
+					page.east = next || nextSet;
+					page.west = prev || Orion.articles[i-1].pages[(Orion.articles[i-1].orientation == "Y") ? 0 : Orion.articles[i-1].pages.length-1];
 				}
 				/** Any Y element **/
-				if(fs.orientation == "Y"){
+				if(article.orientation == "Y"){
 					/** first Y element **/
 					if(j === 0){
 						if(nextSet){
-							f.east = nextSet;
+							page.east = nextSet;
 						}
 						if(prevSet){
-							f.west = prevSet;
+							page.west = prevSet;
 						}
 					}
 					else{
-						f.css({
-							top : ((reverse) ? 1 : -1 ) * ($orion.height() * j)
+						page.css({
+							top : ((reverse) ? -1 : 1 ) * ($orion.height() * j)
 						});
 					}
 					/** Any Y element with next sibling **/
 					if(next){
-						f[(reverse) ? 'south' : 'north'] = next;
+						page[(reverse) ? 'north' : 'south'] = next;
 					}
 					/** Any Y element with prev sibling **/
 					if(prev){
-						f[(reverse) ? 'north' : 'south'] = prev;
+						page[(reverse) ? 'south' : 'north'] = prev;
 					}
 				}
 			});
@@ -332,8 +318,8 @@ Orion.structure = (function(){
 
 		$('head').append(
 			'<style>'+
-				'#orion .featureSet { height : '+height+'px; }\n'+
-				'#orion .featureSet>section, #orion-content { height : '+height+'px; width : '+width+'px; }\n'+
+				'#orion #orion-grid>article { height : '+height+'px; }\n'+
+				'#orion #orion-grid>article>section, #orion-content { height : '+height+'px; width : '+width+'px; }\n'+
 				'#orion #orion-social { height : '+height+'px; }\n'+
 			'</style>');
 	};

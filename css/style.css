@@ -28,6 +28,7 @@
 	 #orion.inverse {
 		-webkit-transform : rotate(180deg);
 	 }
+
 /**
  * @element			Orion Content Container
  * @layout
@@ -37,6 +38,8 @@
 	overflow : hidden;
 	position : absolute;
 	width : 100%;
+	-moz-box-shadow: -3px 0 10px #444;
+	-webkit-box-shadow: -3px 0 10px #444;
 }
 	#orion-content,
 	#orion-content #orion-grid {
@@ -49,12 +52,13 @@
 		width : 99999999px;
 		-webkit-transition-duration : 1s;
 	}
+
 /**
  * @element			Orion Social Aside
  * @layout
  */
 #orion-social {
-	background : #eee;
+	background : #666;
 	left : -100px;
 	position : absolute;
 	width : 100px;
@@ -76,7 +80,6 @@
 			left : 0;
 		}
 
-
 /**
 * @section			 FeatureSet Orientation
 * @layout
@@ -97,8 +100,3 @@
 	.orientationZ section {
 		float : left;
 	}
-
-
-
-
-
