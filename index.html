@@ -3,12 +3,16 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<title>Orion</title>
-		<link type="text/css" href="css/reset.css" rel="stylesheet"/>
-		<link type="text/css" href="css/style.css" rel="stylesheet"/>
-		<link type="text/css" href="css/features.css" rel="stylesheet"/>
 		<link type="text/css" href="css/debug.css" rel="stylesheet"/>
-		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>		
-		<script type="text/javascript" src="js/orion.js"></script>
+		<link type="text/css" href="css/reset.css" rel="stylesheet"/>
+		<link type="text/css" href="css/orion.css" rel="stylesheet"/>
+		<link type="text/css" href="css/features.css" rel="stylesheet"/>
+		<script type="text/javascript" src="js/jquery/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/orion/orion_core.js"></script>
+		<script type="text/javascript" src="js/orion/orion_interaction.js"></script>
+		<script type="text/javascript" src="js/orion/orion_navigation.js"></script>
+		<script type="text/javascript" src="js/orion/orion_social.js"></script>
+		<script type="text/javascript" src="js/orion/orion_structure.js"></script>
 	</head>
 	<body>
 		<div class="debug">
@@ -16,37 +20,29 @@
 			<h2>:: Direction</h2>
 			<div class="links">
 				<div>
-					<a href="#" onclick="$(window).trigger({type:'Orion.move', to:'east'});">East</a>
-					<a href="#" onclick="$(window).trigger({type:'Orion.move', to:'west'});">West</a>
-					<a href="#" onclick="$(window).trigger({type:'Orion.move', to:'north'});">North</a>
-					<a href="#" onclick="$(window).trigger({type:'Orion.move', to:'south'});">South</a>
+					<a href="#" onclick="Orion.navigation.east()">East</a>
+					<a href="#" onclick="Orion.navigation.west()">West</a>
+					<a href="#" onclick="Orion.navigation.north()">North</a>
+					<a href="#" onclick="Orion.navigation.south()">South</a>
+					<a href="#" onclick="Orion.navigation.home()">Home</a>
 				</div>
 			</div>
-			<h2>:: Page</h2>
+			<h2>:: Article</h2>
 			<div class="links">
 				<div>
-					<a href="#" onclick="$(window).trigger({type:'Orion.move', to:'home'});">Home</a>
-				</div>
-			</div>
-			<h2>:: Orientation  : <span>(rejected)  done incorrectly</span></h2>
-			<div class="links">
-				<div>
-					<a href="#" onclick="$(window).trigger({type:'Orion.rotate', to:'default'});">Default</a>
-					<a href="#" onclick="$(window).trigger({type:'Orion.rotate', to:'left'});">Left</a>
-					<a href="#" onclick="$(window).trigger({type:'Orion.rotate', to:'right'});">Right</a>
-					<a href="#" onclick="$(window).trigger({type:'Orion.rotate', to:'inverse'});">Inverse</a>
+					<a href="#" onclick="Orion.navigation.article(1).page(1)">Article 1 Page 1</a>
+					<a href="#" onclick="Orion.navigation.article(2).page(2)">Article 2 Page 2</a>
 				</div>
 			</div>
 			<h2>:: Social</h2>
 			<div class="links">
 				<div>
-					<a href="#" onclick="$(window).trigger('Orion.social.open')">Open</a>
-					<a href="#" onclick="$(window).trigger('Orion.social.close')">Close</a>
+					<a href="#" onclick="Orion.social.open()">Open</a>
+					<a href="#" onclick="Orion.social.close()">Close</a>
 				</div>
 			</div>
 		</div>
-
-
+	
 		<div id="orion">
 			<aside id="orion-social">
 				test
@@ -56,5 +52,6 @@
 				</div>
 			</div>
 		</div>
+		
 	</body>
 </html>

@@ -17,10 +17,6 @@
 					"src" : "data/a1p1.html",
 					"type" : "feature1"
 
-				},
-				{
-					"src" : "data/a1p2.html",
-					"type" : "feature2"
 				}
 			],
 			"orientation" : "X"
@@ -37,6 +33,19 @@
 				}
 			],
 			"orientation" : "Z"
+		},
+		{
+			"pages" : [
+				{
+					"src" : "data/a3p1.html",
+					"type" : "feature4"
+				},
+				{
+					"src" : "data/a3p2.html",
+					"type" : "feature5"
+				}
+			],
+			"orientation" : "Y"
 		},
 		{
 			"pages" : [

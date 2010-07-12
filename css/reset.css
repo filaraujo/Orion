@@ -29,7 +29,7 @@ input, select, isindex, listing, xmp, plaintext {
 	font-size: 1em;
 	font: inherit;
 	}
-dfn, i, cite, var, address, em { 
+dfn, cite, var, address, em { 
 	font-style: normal; 
 	}
 th, h1, h2, h3, h4, h5, h6 { 

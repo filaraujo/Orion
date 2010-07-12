@@ -11,23 +11,21 @@
  * @element			Orion Container
  * @layout
  */
- #orion {
- 	border : 2px solid #ccc;
-	height : 800px;
-	margin : 10px auto;
+#orion {
+	height : 100%;
 	overflow : hidden;
 	position : relative;
-	width : 600px;
- }
-	 #orion.left {
+	width : 100%;
+}
+	#orion.left {
 		-webkit-transform : rotate(-90deg);
-	 }
-	 #orion.right {
+	}
+	#orion.right {
 		-webkit-transform : rotate(90deg);
-	 }
-	 #orion.inverse {
+	}
+	#orion.inverse {
 		-webkit-transform : rotate(180deg);
-	 }
+	}
 
 /**
  * @element			Orion Content Container
@@ -38,19 +36,24 @@
 	overflow : hidden;
 	position : absolute;
 	width : 100%;
-	-moz-box-shadow: -3px 0 10px #444;
-	-webkit-box-shadow: -3px 0 10px #444;
+	-moz-box-shadow: -3px 0 10px #222;
+	-webkit-box-shadow: -3px 0 10px #222;
 }
 	#orion-content,
 	#orion-content #orion-grid {
+		-moz-transition-property : left top;
+		-moz-transition-duration : .5s;
+		-moz-transition-timing-function : ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
 		-webkit-transition-property : left top;
 		-webkit-transition-duration : .5s;
-		-webkit-transition-timing-function: ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
+		-webkit-transition-timing-function : ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
 	}
 	#orion-content #orion-grid {
+		cursor : move;
 		position : absolute;
 		width : 99999999px;
-		-webkit-transition-duration : 1s;
+		-moz-transition-duration : .75s;
+		-webkit-transition-duration : .75s;
 	}
 
 /**
@@ -58,7 +61,7 @@
  * @layout
  */
 #orion-social {
-	background : #666;
+	background : #444;
 	left : -100px;
 	position : absolute;
 	width : 100px;
@@ -72,12 +75,17 @@
 		}
 	#orion-social.slide {
 		z-index : 100;
+		-moz-transition-property : left top;
+		-moz-transition-duration : .5s;
+		-moz-transition-timing-function : ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
 		-webkit-transition-property : left top;
 		-webkit-transition-duration : .5s;
 		-webkit-transition-timing-function: ease-out, cubic-bezier(0.5, 0.2, 0.3, 1.0);
 	}
 		#orion-social.slide.open {
 			left : 0;
+			-moz-box-shadow: 3px 0 10px #555;
+			-webkit-box-shadow: 3px 0 10px #555;
 		}
 
 /**
