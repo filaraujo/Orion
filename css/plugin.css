@@ -1,0 +1,23 @@
+/**
+ * @author			Filipe Araujo
+ *
+ * @version			1.0
+ * @since			1.0
+ *
+ * @lastChanges
+ */
+
+/**
+ * @element         rotator
+ */
+.orion-rotator {
+	position : relative;
+	overflow : hidden;
+}
+	.orion-rotator-content {
+		overflow : hidden;
+	}
+	.orion-rotator .orion-rotator-holder {
+		position : relative;
+		width : 99999px;
+	}

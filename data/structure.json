@@ -15,7 +15,7 @@
 			"pages" : [
 				{
 					"src" : "data/a1p1.html",
-					"type" : "feature1"
+					"type" : "article"
 
 				}
 			],
@@ -25,11 +25,11 @@
 			"pages" : [
 				{
 					"src" : "data/a2p1.html",
-					"type" : "feature1"
+					"type" : "article"
 				},
 				{
-					"src" : "data/a2p1.html",
-					"type" : "feature1"
+					"src" : "data/a2p2.html",
+					"type" : "article"
 				}
 			],
 			"orientation" : "Z"
@@ -38,24 +38,11 @@
 			"pages" : [
 				{
 					"src" : "data/a3p1.html",
-					"type" : "feature4"
+					"type" : "article"
 				},
 				{
 					"src" : "data/a3p2.html",
-					"type" : "feature5"
-				}
-			],
-			"orientation" : "Y"
-		},
-		{
-			"pages" : [
-				{
-					"src" : "data/a3p1.html",
-					"type" : "feature4"
-				},
-				{
-					"src" : "data/a3p2.html",
-					"type" : "feature5"
+					"type" : "article"
 				}
 			],
 			"orientation" : "Y"

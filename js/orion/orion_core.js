@@ -4,6 +4,7 @@
 *
 * @TODO                 content priority loading
 * @TODO                 onEnter, onExit, onChange, onComplete
+* @TODO                 spinner
 */
 
 /**
@@ -18,8 +19,6 @@ Orion = (function(){
 	init = function(){
 
 		Orion.structure.load();
-		Orion.social.fx().init();
-
 
 		/* map interactions */
 		$(document).bind('keydown', Orion.interaction.registerKeyPress)

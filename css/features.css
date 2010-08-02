@@ -50,11 +50,12 @@
 /*
  * @element			Cover
  */
-section.cover {
-	background : url(../assets/cover/cover.jpg);
+#a0 section {
+	background : url(../assets/cover/cover.jpg) center center no-repeat;
+	background-size : 100%;
 	position : relative;
 }
-	.cover a.main {
+	#a0 a.main {
 		height : 200px;
 		position : absolute;
 		right : 10px;
@@ -62,32 +63,32 @@ section.cover {
 		top : 140px;
 		width : 225px;
 	}
-	.cover a.main span {
+	#a0 a.main span {
 		color : #564b62;
 		display : block;
 		font-family : 'Franklin';
 		text-transform : uppercase;
 	}
-	.cover a.main span:first-child {
+	#a0 a.main span:first-child {
 		font-size : 29px;
 		letter-spacing : -1px;
 	}
-	.cover a.main span:nth-child(2) {
+	#a0 a.main span:nth-child(2) {
 		font-size : 60px;
 		letter-spacing : -1px;
 		line-height : 38px;
 	}
-	.cover a.main span:nth-child(3) {
+	#a0 a.main span:nth-child(3) {
 		font-family : 'Corbel';
 		font-size : 12px;
 		margin-top : 8px;
 	}
-	.cover a.main span:nth-child(4) {
+	#a0 a.main span:nth-child(4) {
 		font-size : 54px;
 		letter-spacing : -2px;
 		line-height : 46px;
 	}
-	.cover a.main span:nth-child(5) {
+	#a0 a.main span:nth-child(5) {
 		font-size : 16px;
 		font-family : 'Corbel';
 		left : 105px;
@@ -96,12 +97,12 @@ section.cover {
 		top : 100px;
 		-webkit-transform : rotate(45deg);
 	}
-	.cover a.main span:nth-child(6) {
+	#a0 a.main span:nth-child(6) {
 		font-family : 'Corbel';
 		font-size : 12px;
 		line-height : 10px;
 	}
-	.cover a.main span:nth-child(7) {
+	#a0 a.main span:nth-child(7) {
 		font-family : 'Corbel';
 		font-size : 35px;
 		letter-spacing : -1px;
@@ -167,4 +168,103 @@ section.cover {
 			display : block;
 			font-size : 10px;
 			line-height : 18px;
+		}
+
+/*
+ * @element			article 2
+ */
+#a2 {}
+	#orion #a2 > .p1,
+	#orion #a2 > .p2 {
+		padding : 10px;
+		width : 630px;
+	}
+		#a2 .p1 header,
+		#a2 .p2 header{
+			background : #666;
+			color : #fff;
+			height : 100px;
+		}
+		#a2 .p1 .orion-rotator {
+			height : 600px;
+			width : 630px;
+		}
+			#a2 .p1 .orion-rotator .orion-rotator-content {
+				float : left;
+			}
+				#a2 .p1 .orion-rotator .orion-rotator-content,
+				#a2 .p1 .orion-rotator .orion-rotator-content img {
+					height : 520px;
+					margin-right : 10px;
+					width : 520px;
+				}
+			#a2 .p1 .orion-rotator .orion-rotator-nav {
+				float : left;
+				width : 100px;
+			}
+				#a2 .p1 .orion-rotator .orion-rotator-nav img,
+				#a2 .p1 .orion-rotator .orion-rotator-nav li {
+					height : 100px;
+					margin-bottom : 5px;
+					width : 100px;
+				}
+		#a2 > .p2 article {
+			background : #666;
+			color : #fff;
+			float : left;
+			width : 500px;
+		}
+		#a2 > .p2 sidebar {
+			background : #666;
+			color : #fff;
+			float : right;
+			width : 120px;
+		}
+
+/*
+ * @element			article 3
+ */
+#a3 {}
+	#orion #a3 > .p1,
+	#orion #a3 > .p2 {
+		padding : 10px;
+		width : 630px;
+	}
+		#a3 .p1 article,
+		#a3 .p1 header {
+			background : #666;
+			color : #fff;
+		}
+	#a3 .p2 {}
+		#a3 .p2 article,
+		#a3 .p2 header,
+		#a3 .p2 sidebar {
+			background : #666;
+			color : #fff;
+		}
+		#a3 .p2 article {
+			float : left;
+			width : 500px;
+		}
+		#a3 .p2 header {
+			height : 100px;
+		}
+		#a3 .p2 sidebar {
+			float : right;
+			width : 100px;
+		}
+
+
+/*
+ * @element			article 4
+ */
+#a3 {}
+	#orion #a3 > .p1 {
+		padding : 10px;
+		width : 630px;
+	}
+		#a3 .p1 header {
+			background : #666;
+			color : #fff;
+			height : 100px;
 		}

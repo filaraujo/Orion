@@ -7,17 +7,22 @@
 		<link type="text/css" href="css/reset.css" rel="stylesheet"/>
 		<link type="text/css" href="css/orion.css" rel="stylesheet"/>
 		<link type="text/css" href="css/features.css" rel="stylesheet"/>
+		<link type="text/css" href="css/plugin.css" rel="stylesheet"/>
 		<script type="text/javascript" src="js/jquery/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery-ui-1.8.2.cusom.min.js"></script>
 		<script type="text/javascript" src="js/orion/orion_core.js"></script>
 		<script type="text/javascript" src="js/orion/orion_interaction.js"></script>
 		<script type="text/javascript" src="js/orion/orion_navigation.js"></script>
 		<script type="text/javascript" src="js/orion/orion_social.js"></script>
 		<script type="text/javascript" src="js/orion/orion_structure.js"></script>
+		<script type="text/javascript" src="js/orion/orion_plugins.js"></script>
 	</head>
-	<body>
+	<body>	
 		<div class="debug">
 			<h1>Project Orion</h1>
 			<h2>:: Direction</h2>
+			
+			<!-- onclicks are ugly! but done for testing only -->
 			<div class="links">
 				<div>
 					<a href="#" onclick="Orion.navigation.east()">East</a>
@@ -37,10 +42,23 @@
 			<h2>:: Social</h2>
 			<div class="links">
 				<div>
+					<span>Set FX :</span>
+					<a href="#" onclick="Orion.social.fx('slide').init();">Slide</a>
+					<a href="#" onclick="Orion.social.fx().init();">Behind</a>
+				</div>
+				<div>
+					<span>Action :</span>
 					<a href="#" onclick="Orion.social.open()">Open</a>
 					<a href="#" onclick="Orion.social.close()">Close</a>
 				</div>
 			</div>
+			<h2>:: Plugin Init</h2>
+			<div class="links">
+				<div>
+					<a href="#" onclick="$('.orion-rotator').rotator()">Rotator</a>
+				</div>
+			</div>
+
 		</div>
 	
 		<div id="orion">

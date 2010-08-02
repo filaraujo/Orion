@@ -63,7 +63,7 @@ Orion.structure = (function(){
 		$.each(Orion.articles, function(i,article){
 			$art = $article.clone().addClass('orientation' + article.orientation).attr("id",'a'+i);
 			$.each(article.pages,function(j,page){
-				$pg= $page.clone().addClass(page.type);
+				$pg= $page.clone().addClass("p"+(parseFloat(j)+1));
 				$pg.src = page.src;
 				$pg.type = page.type;
 				Orion.articles[i].pages[j] = $pg;

@@ -88,9 +88,13 @@ body {
 		text-transform : uppercase;
 	}
 		.links div {
-			margin : 5px 5px;
-
+			border-bottom : 1px solid #777;
+			padding : 5px 5px;
 		}
+			.links div span {
+				float : left;
+				width : 60px;
+			}
 		.links a {
 			color : #ccf;
 			margin-right : 10px;
