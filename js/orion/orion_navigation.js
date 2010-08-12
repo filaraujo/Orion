@@ -45,12 +45,12 @@ Orion.navigation = (function(){
 				_vel = {
 					x : _new.x - _old.x,
 					y : _new.y - _old.y
-				}
+				};
 				_spd = Math.ceil(Math.sqrt(_vel.x * _vel.x + _vel.y * _vel.y));
 
 				this.speed = _spd;
 				this.velocity = _vel;
-				
+
 				return this;
 			},
 			stop : function(){
